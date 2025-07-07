@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPS_ငွေလွှဲအချက်အလက်များ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Noto Sans Myanmar', sans-serif;
+        }
+        
+        :root {
+            --kpay: #6a0dad;
+            --wave: #00a651;
+            --kbz: #e31837;
+            --krungthai: #0066b3;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--kpay), var(--wave), var(--kbz), var(--krungthai));
+            border-radius: 2px;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 20px auto 0;
+            line-height: 1.8;
+        }
+        
+        .accounts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .account-section {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .account-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .kpay-header {
+            background: linear-gradient(to right, var(--kpay), #8a2be2);
+        }
+        
+        .wave-header {
+            background: linear-gradient(to right, var(--wave), #00c853);
+        }
+        
+        .kbz-header {
+            background: linear-gradient(to right, var(--kbz), #ff5252);
+        }
+        
+        .krungthai-header {
+            background: linear-gradient(to right, var(--krungthai), #0088cc);
+        }
+        
+        .payment-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .account-details {
+            padding: 25px;
+        }
+        
+        .detail-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .detail-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .detail-value {
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .copy-btn {
+            background: #f1f3f5;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        
+        .copy-btn:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-btn.copied {
+            background: var(--success);
+            color: white;
+        }
+        
+        .qr-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .qr-image {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .qr-label {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .accounts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .detail-value {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .copy-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-money-bill-wave"></i> ငွေလွှဲအချက်အလက်များ</h1>
+            <p class="description">
+                အောက်ပါအကောင့်များမှတစ်ဆင့် ငွေလွှဲနိုင်ပါသည်။ ဖုန်းနံပါတ်/အကောင့်နံပါတ်များကို Copy ကူးရန် Copy ခလုတ်ကို နှိပ်ပါ။
+            </p>
+        </header>
+        
+        <div class="accounts-container">
+            <!-- Kpay Account 1 -->
+            <div class="account-section">
+                <div class="section-header kpay-header">
+                    <img src="images/kpay.png" alt="Kpay Logo" class="payment-logo">
+                    <h2>Kpay Account 1</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>Daw Phway Phway San</span>
+                            <button class="copy-btn" data-text="Daw Phway Phway San">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-phone"></i>
+                            <span>Kpay_ဖုန်းနံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>09790151126</span>
+                            <button class="copy-btn" data-text="09790151126">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qr-container">
+                        <img src="images/PPS_QR.png" alt="Kpay QR Code 1" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Kpay Account 2 -->
+            <div class="account-section">
+                <div class="section-header kpay-header">
+                    <img src="images/kpay.png" alt="Kpay Logo" class="payment-logo">
+                    <h2>Kpay Account 2</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>MG Nay Htet Lin</span>
+                            <button class="copy-btn" data-text="MG Nay Htet Lin">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-phone"></i>
+                            <span>ဖုန်းနံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>09425287090</span>
+                            <button class="copy-btn" data-text="09425287090">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qr-container">
+                        <img src="images/NHL_QR.png" alt="Kpay QR Code 2" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Wave Money Account -->
+            <div class="account-section">
+                <div class="section-header wave-header">
+                    <img src="images/wavemomey.png" alt="Wave Money Logo" class="payment-logo">
+                    <h2>Wave Money Account</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>Daw Phway Phway San</span>
+                            <button class="copy-btn" data-text="Daw Phway Phway San">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-phone"></i>
+                            <span>ဖုန်းနံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>09790151126</span>
+                            <button class="copy-btn" data-text="09790151126">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qr-container">
+                        <img src="images/wave_QR.png" alt="WavePay QR Code" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KBZ Mbanking 1 -->
+            <div class="account-section">
+                <div class="section-header kbz-header">
+                    <img src="images/kbzbank.png" alt="KBZ Bank Logo" class="payment-logo">
+                    <h2>KBZ Mbanking 1</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-id-card"></i>
+                            <span>အကောင့်နံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>34213734200876801</span>
+                            <button class="copy-btn" data-text="34213734200876801">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အကောင့်အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>Daw Phway Phway San</span>
+                            <button class="copy-btn" data-text="Daw Phway Phway San">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=34213734200876801" alt="KBZ QR Code 1" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KBZ Mbanking 2 -->
+            <div class="account-section">
+                <div class="section-header kbz-header">
+                    <img src="images/kbzbank.png" alt="KBZ Bank Logo" class="payment-logo">
+                    <h2>KBZ Mbanking 2</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-id-card"></i>
+                            <span>အကောင့်နံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>34213734200909801</span>
+                            <button class="copy-btn" data-text="34213734200909801">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အကောင့်အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>MG Nay Htet Lin</span>
+                            <button class="copy-btn" data-text="MG Nay Htet Lin">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=34213734200909801" alt="KBZ QR Code 2" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Krungthai Bank Account -->
+            <div class="account-section">
+                <div class="section-header krungthai-header">
+                    <img src="images/thailand.png" alt="Krungthai Bank Logo" class="payment-logo">
+                    <h2>Krungthai Bank</h2>
+                </div>
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-id-card"></i>
+                            <span>အကောင့်နံပါတ်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>708 087 320 7</span>
+                            <button class="copy-btn" data-text="708 087 320 7">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">
+                            <i class="fas fa-user"></i>
+                            <span>အကောင့်အမည်</span>
+                        </div>
+                        <div class="detail-value">
+                            <span>Miss Ei Ei</span>
+                            <button class="copy-btn" data-text="Miss Ei Ei">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="qr-container">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Krungthai Bank - 7080873207" alt="Krungthai QR Code" class="qr-image">
+                        <div class="qr-label">
+                            QR Code ဖြင့်ငွေလွှဲရန်
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2024 PPS ငွေလွှဲဝန်ဆောင်မှု - အားလုံးသောငွေလွှဲအချက်အလက်များကို လွယ်ကူစွာကူးယူအသုံးပြုနိုင်ပါသည်</p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>အချက်အလက်ကို ကူးယူပြီးပါပြီ!</span>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            const notification = document.getElementById('notification');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const textToCopy = this.getAttribute('data-text');
+                    copyToClipboard(textToCopy);
+                    
+                    // Show notification
+                    notification.classList.add('show');
+                    
+                    // Change button style temporarily
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    this.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        this.innerHTML = originalText;
+                        this.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+            
+            function copyToClipboard(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'absolute';
+                textarea.style.left = '-9999px';
+                document.body.appendChild(textarea);
+                
+                const selected = document.getSelection().rangeCount > 0
+                    ? document.getSelection().getRangeAt(0)
+                    : false;
+                
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                
+                if (selected) {
+                    document.getSelection().removeAllRanges();
+                    document.getSelection().addRange(selected);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
